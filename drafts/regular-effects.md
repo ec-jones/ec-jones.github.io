@@ -1,33 +1,3 @@
-<!doctype html>
-<html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <link rel="icon" href="resources/icon.png">
-
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira+Code">
-
-  <link rel="stylesheet" href="../style.css">
-
-  <title>Regular Effects</title>
-</head>
-
-<body>
-  <header>
-    <div class="post-title">
-      Regular Effects
-    </div>
-
-    <div class="contact">
-      <a href="../index.html" rel="home"><span class="home">Eddie Jones;</span></a>
-      <a href="../CV.html" class="fa fa-id-card-o"></a>
-      <a href="mailto: eddie.c.jones@outlook.com" class="fa fa-envelope"></a>
-      <a href="https://github.com/ec-jones" class="fa fa-github"></a>
-    </div>
-  </header>
 
   <main>
     <h2>

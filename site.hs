@@ -7,7 +7,7 @@ import Text.HTML.TagSoup
 import Text.Hyphenation
 
 main :: IO ()
-main = hakyll $ do
+main = hakyllWith defaultConfiguration { destinationDirectory = "docs" } $ do
   -- Load templates
   match "templates/*" $
     compile templateBodyCompiler
