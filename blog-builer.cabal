@@ -1,0 +1,39 @@
+cabal-version:      3.4
+name:               blog-builder
+version:            0.1.0.0
+author:             Eddie
+maintainer:         eddie.c.jones@pm.me
+build-type:         Simple
+
+executable site
+  main-is:            site.hs
+
+  build-depends:      base,
+                      time,
+                      hakyll,
+                      hyphenation,
+                      tagsoup
+
+  default-extensions: OverloadedStrings
+                      ImportQualifiedPost
+                      LambdaCase
+
+  ghc-options:        -Wall
+                      -Wcompat
+                      -Widentities
+                      -Wincomplete-uni-patterns
+                      -Wincomplete-record-updates
+                      -Wredundant-constraints
+                      -Wmissing-export-lists
+                      -Wpartial-fields
+                      -Wmissing-deriving-strategies
+                      -Wunused-packages
+
+                      -fhide-source-paths
+                      -freverse-errors
+
+                      -threaded
+                      -rtsopts
+                      -with-rtsopts=-N
+
+  default-language:   Haskell2010

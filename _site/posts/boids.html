@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Eddie Jones' functional programming blog">
+    <meta name="keywords" content="Computer Science, Formal Verification, Functional Programming, Haskell">
+    <meta name="author" content="Eddie Jones">
+
+    <link rel="icon" href="../resources/icon.png">
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Fira+Code" rel="stylesheet">
+
+    <link href="../css/default.css" rel="stylesheet">
+
+    <title>Comonadic Boids</title>
+</head>
+
+<body>
+    <header>
+        <div class="title"> Comonadic Boids </div>
+
+        
+
+        
+        <div class="description">Eddie Jones, March 2023</div>
+        
+
+        <nav class="contact">
+            <a href="../index.html" title="Home" class="fa fa-home"></a>
+            <a href="CV.html" title="CV" class="fa fa-id-card-o"></a>
+            <a href="mailto: eddie.c.jones@pm.me" title="E-mail" class="fa fa-envelope"></a>
+            <a href="https://github.com/ec-jones" title="Github" class="fa fa-github"></a>
+        </nav>
+    </header>
+
+    <main role="main">
+        <p>Nature’s abil­ity to or­gan­ise it­self is not just im­press­ive but of­ten beau­ti­ful too.
+When a group of starlings flock to­geth­er, they cre­ate a mes­mer­ising ac­ro­batic per­form­ance. Ap­par­ently, we’re not the only spe­cies that like to dance!</p>
+<p>It’s not just bio­lo­gists that find the sight fas­cin­at­ing.
+There is a whole field of com­puter sci­ence ded­ic­ated to ab­stract­ing and rep­lic­at­ing these emer­gent be­ha­viours with a vari­ety of ap­plic­a­tions.</p>
+<p>Boids was one of the first al­gorithms de­signed to mimic flock­ing be­ha­viour.
+Each boid is gov­erned by three simple forces:</p>
+<ul>
+<li>Sep­ar­a­tion: Avoid other boids as to not cause a col­li­sion.</li>
+<li>Co­he­sion: Stick to­geth­er, i.e. move to­wards the av­er­age po­s­i­tion.</li>
+<li>Align­ment: Fol­low the dir­ec­tion of the crowd.</li>
+</ul>
+<p>While these forces af­fect in­di­vidual boids, they are in­her­ently de­pend­ent on the po­s­i­tion of neigh­bour­ing boids — the con­text.
+If we are to im­ple­ment a simple boid sim­u­la­tion in a char­ac­ter­ist­ic­ally func­tional (read over­-en­gin­eered) style, it is nat­ural to ap­ply the frame­work of <em>con­tex­t-aware pro­gram­ming</em>.</p>
+<h2 id="context-aware-pogramming">Con­tex­t-aware Po­gram­ming</h2>
+<p>Mon­ads have been widely ad­op­ted in the func­tional pro­gram­ming com­munity, but their du­al, co-­mon­ads, are sadly not so pop­u­lar.
+Al­though mon­ads play a broad and im­port­ant role in cat­egory the­ory, for a pro­gram­mer they are es­sen­tially a con­ven­tion for adding struc­ture to the out­put of a func­tion.
+In par­tic­u­lar, they al­lows us to clearly de­lin­eate its “true” res­ult <code>b</code> from any side-ef­fects <code>m</code>:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ot">ef­fec­tul­Func­tion ::</span> <span class="dt">Monad</span> m <span class="ot">=&gt;</span> a <span class="ot">-&gt;</span> m b</span></code></pre></div>
+<p>Of course, this con­ven­tion is mean­ing­less without some laws. For mon­ads, the laws con­cern the com­pos­i­tion of ef­fect­ful func­tions and the abil­ity to lift pure func­tions into this richer con­text. Ef­fect­ful func­tions must be­have some­what like pure func­tions in that com­pos­i­tion is as­so­ci­at­ive and has an iden­tity.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> <span class="dt">Monad</span> m <span class="kw">where</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ot">  re­turn ::</span> a <span class="ot">-&gt;</span> m a</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="ot">  (&gt;&gt;=) ::</span> m a <span class="ot">-&gt;</span> (a <span class="ot">-&gt;</span> m b) <span class="ot">-&gt;</span> m b</span></code></pre></div>
+<p>Sim­il­arly, co­mon­ads add struc­ture to the in­put fo­cus­ing on some sub­sec­tion of the in­put <code>a</code> dis­tin­guished from con­tex­tual in­form­a­tion <code>w</code>.
+In our case, the fo­cus is an in­di­vidual boid, whereas the con­text con­tains the re­l­at­ive po­s­i­tion of the rest of the flock, i.e. re­sources that in­flu­ence but are not in­flu­enced by the up­dat­ing of an in­di­vidual boid.
+Ul­ti­mately, the dis­tinc­tion will de­pend on the ap­plic­a­tion as with mon­ads.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ot">coef­fect­ful­Func­tion ::</span> <span class="dt">Co­monad</span> w <span class="ot">=&gt;</span> w a <span class="ot">-&gt;</span> b</span></code></pre></div>
+<p>As you might ex­pect, co­mon­ads must also sat­isfy a set of ana­log­ous laws.
+In or­der to un­der­stand the dual no­tion of com­pos­i­tion, we can think of a co­monad as a sort of <em>con­tainer</em>.
+Within this con­tain­er, there are many <em>po­s­i­tions</em> each hold­ing an ob­jects of type <code>a</code> that have some re­la­tion to each other such as oc­cupy­ing neigh­bour­ing cells of a grid.
+One of the po­s­i­tions is the cur­rent fo­cus.
+However, we could fo­cus on any of them, and they will all have a dif­fer­ent view of their con­text, e.g. a dif­fer­ent set of neigh­bour­ing cells.
+Co­mon­ads must come equipped with a func­tion for <em>ex­tract­ing</em> the cur­rent fo­cus while dis­reg­ard­ing the con­text.
+And one for <em>ex­tend­ing</em> a con­tex­t-aware op­er­a­tion to the ob­ject in each po­s­i­tion in the con­tainer with their loc­al­ised view of the con­text.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> <span class="dt">Co­monad</span> w <span class="kw">where</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ot">  ex­tract ::</span> w a <span class="ot">-&gt;</span> w</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="ot">  ex­tend ::</span> (w a <span class="ot">-&gt;</span> b) <span class="ot">-&gt;</span> w a <span class="ot">-&gt;</span> w b</span></code></pre></div>
+<p>Un­der this in­tu­ition, the laws gov­ern­ing co­monad in­stances can be roughly trans­lated as:</p>
+<ul>
+<li><p>Ex­tract­ing the fo­cus from every po­s­i­tion in a con­tainer must equate to the ori­ginal con­tainer</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>  ex­tend ex­tract <span class="ot">=</span> <span class="fu">id</span></span></code></pre></div></li>
+<li><p>Ex­tend­ing a con­tex­t-aware op­er­a­tion to the whole con­tainer and then ex­tract­ing the fo­cus must be the same as ap­ply­ing the con­tex­t-aware op­er­a­tion to the ori­ginal con­tainer with its ori­ginal fo­cus.
+In other words, ex­tend does not change which ele­ment is in fo­cus.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>  ex­tract <span class="op">.</span> ex­tend f <span class="ot">=</span> f</span></code></pre></div></li>
+<li><p>And fi­nally, the com­pos­i­tion of ex­ten­ded con­tex­t-aware op­er­a­tions should be as­so­ci­at­ive.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>  ex­tend f <span class="op">.</span> ex­tend g <span class="ot">=</span> ex­tend (f <span class="op">.</span> ex­tend g)</span></code></pre></div></li>
+</ul>
+<h2 id="the-flock-comonad">The Flock Co­monad</h2>
+<p>Our three boid up­date func­tions have a nat­ural fo­cus and con­text: the cur­rent boid we’re up­dat­ing, and the rest of the flock.
+We can think of a flock as a con­tainer full of boids where the po­s­i­tion of each boid is its co­ordin­ate, in say 2-di­men­sional space.
+In­ter­est­ingly though, to per­form these op­er­a­tions, we do not need ex­act po­s­i­tions just the re­l­at­ive po­s­i­tions of other boids.
+The boid in fo­cus is thus po­si­tioned at the ori­gin, i.e. the zero vec­tor (0, 0), and the con­text con­tains vec­tors to the other boids.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> <span class="dt">Flock</span> a <span class="ot">=</span> <span class="dt">Map</span> (<span class="dt">Float</span>, <span class="dt">Float</span>) a</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="ot">ex­tract ::</span> <span class="dt">Flock</span> a <span class="ot">-&gt;</span> a</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>ex­tract flock <span class="ot">=</span> flock <span class="op">!</span> (<span class="dv">0</span>, <span class="dv">0</span>)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="ot">ex­tend ::</span> (<span class="dt">Flock</span> a <span class="ot">-&gt;</span> b) <span class="ot">-&gt;</span> <span class="dt">Flock</span> a <span class="ot">-&gt;</span> <span class="dt">Flock</span> b</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>ex­tend f flock <span class="ot">=</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  map­WithKey (\­pos _ <span class="ot">-&gt;</span> f <span class="op">$</span> map­Keys (<span class="op">-</span> pos) flock) flock </span></code></pre></div>
+<p><br />
+</p>
+<figure>
+<img src="../resources/boids.svg" alt="Application of extend id to a small flock." />
+<figcaption aria-hidden="true">Ap­plic­a­tion of <code>ex­tend id</code> to a small flock.</figcaption>
+</figure>
+<p>It’s in the ex­ten­sion of con­tex­t-aware op­er­a­tion the real ma­gic hap­pens.
+For sim­pli­city, let’s con­sider ex­tend­ing the iden­tity func­tion, this will re­place each boid with its view of the flock.
+However, as our boids are rather egot­istic and see them­selves as the centre of the flock, their view of the flock will be in­versely shif­ted by their own po­s­i­tion so that they oc­cupy the ori­gin.</p>
+<p>In the dia­gram on the left, the fo­cus of a flock is in­dic­ated by a red circle.
+After the con­tex­t-ware up­date, each po­s­i­tion in the flock is oc­cu­pied by a copy of the ori­ginal flock ex­cept where the fo­cus has shif­ted to the po­s­i­tion in ques­tion.</p>
+<h2 id="comonadic-boids">Co­mon­adic Boids</h2>
+<p>What is the pay­off from all this book-­keep­ing? We can now define the forces that act upon boids nat­ur­ally - one boid at a time, without wor­ry­ing about how this af­fects the over­all flock.
+This sep­ar­a­tion of con­cerns high­lights the fact that self-or­gan­isa­tion is an emer­gent prop­erty.
+Con­sider the im­ple­ment­a­tion of the co­he­sion force for ex­ample:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- N.B. the re­turn type is not Flock Boid</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="ot">co­he­sion ::</span> <span class="dt">Flock</span> <span class="dt">Boid</span> <span class="ot">-&gt;</span> <span class="dt">Boid</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>co­he­sion flock <span class="ot">=</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span><span class="ot"> boid ::</span> <span class="dt">Boid</span> <span class="co">-- Boid in fo­cus</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>      boid <span class="ot">=</span> ex­tract flock</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="ot">      pos ::</span> (<span class="dt">Float</span>, <span class="dt">Float</span>) <span class="co">-- Av­er­age po­s­i­tion</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>      pos <span class="ot">=</span> <span class="fu">sum</span> (Map.keys flock <span class="op">/</span> size flock)</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">in</span> boid <span class="ot">`steer­To­wards`</span> pos</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="ot">ap­ply­Co­he­sion ::</span> <span class="dt">Flock</span> <span class="dt">Boid</span> <span class="ot">-&gt;</span> <span class="dt">Flock</span> <span class="dt">Boid</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>ap­ply­Co­hes­tion <span class="ot">=</span> ex­tend co­he­sion</span></code></pre></div>
+<p>The type of this func­tion hints that it is a force ap­plied to boids rather than an ar­bit­rary op­er­a­tion on flocks.
+It is not pos­sible, for ex­ample, to in­sert a new boid into the flock with a func­tion of this type.
+Al­though type-driven de­vel­op­ment is some­what of an aes­thetic con­cern, I do be­lieve that a sprink­ling of ab­strac­tion can lead to more lu­cid code that is con­sequently easier to main­tain.
+Ul­ti­mately the right rep­res­ent­a­tion of data should take into con­sid­er­a­tion the rel­ev­ant op­er­a­tions and ob­scure dan­ger­ous or un­in­ten­ded ones; this is of­ten achiev­able in an el­eg­ant man­ner by ap­peal­ing to math­em­at­ical struc­tures.</p>
+    </main>
+
+    <footer>
+        Site proudly generated by
+        <a href="http://jaspervdj.be/hakyll">Hakyll</a>
+    </footer>
+</body>
+
+</html>
