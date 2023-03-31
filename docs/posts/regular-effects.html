@@ -93,12 +93,11 @@ The second para­meter of this data­type is the re­turn type of its prim­it­
 This is no dif­fer­ent from con­sid­er­ing the length of the list as an ab­strac­tion over its value, and has the same be­ne­fits.
 However, we fur­ther re­quire that a mon­ad’s grad­ing is a mon­oid, so it has a sens­ible no­tion of com­pos­i­tion and iden­tity that mir­rors the mon­ad’s struc­ture.</p>
 <p>As we are con­cerned with the free monad a good place to start is with the free mon­oid, i.e. lists.
-Con­sid­er­ing sig­na­tures that are them­selves in­dexed by some type <code>i</code>, we can in­dex mon­adic ex­pres­sions as either the empty list for the <code class="sourceCode haskell"><span class="dt">Pure</span></code> con­struct­or, in­dic­at­ing that it has no ef­fect, or by pre­pend­ing the in­dex of a prim­it­ive op­er­a­tion to those of the con­tinu­ation for the <code class="sourceCode haskell"><span class="dt">Bind</span></code> con­struct­or.
-Here the ticked con­struct­ors (e.g. <code>'[]</code>) merely in­dic­ate that we have pro­moted them to the type-­level.</p>
+Con­sid­er­ing sig­na­tures that are them­selves in­dexed by some type <code>i</code>, we can in­dex mon­adic ex­pres­sions as either the empty list for the <code class="sourceCode haskell"><span class="dt">Pure</span></code> con­struct­or, in­dic­at­ing that it has no ef­fect, or by pre­pend­ing the in­dex of a prim­it­ive op­er­a­tion to those of the con­tinu­ation for the <code class="sourceCode haskell"><span class="dt">Bind</span></code> con­struct­or.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> <span class="dt">Free</span><span class="ot"> ::</span> (i <span class="ot">-&gt;</span> <span class="dt">Type</span>) <span class="ot">-&gt;</span> [i] <span class="ot">-&gt;</span> <span class="dt">Type</span> <span class="ot">-&gt;</span> <span class="dt">Type</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> <span class="dt">Free</span> f ix a <span class="kw">where</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">Pure</span><span class="ot"> ::</span> a <span class="ot">-&gt;</span> f '[] a</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">Bind</span><span class="ot"> ::</span> f i a <span class="ot">-&gt;</span> (a <span class="ot">-&gt;</span> f ix b) <span class="ot">-&gt;</span> f (i '<span class="op">:</span> ix) b</span></code></pre></div>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">Pure</span><span class="ot"> ::</span> a <span class="ot">-&gt;</span> f [] a</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">Bind</span><span class="ot"> ::</span> f i a <span class="ot">-&gt;</span> (a <span class="ot">-&gt;</span> f ix b) <span class="ot">-&gt;</span> f (i <span class="op">:</span> ix) b</span></code></pre></div>
 <p>We can now en­rich our ef­fect sig­na­ture with an in­dex that dis­tin­guishes between dif­fer­ent sorts of prim­it­ive op­er­a­tion.
 In this case, to in­dic­ate whether it is a <code class="sourceCode haskell"><span class="dt">Get</span></code> or <code class="sourceCode haskell"><span class="dt">Put</span></code>.
 And thus spe­cify that shape of an ef­fect­ful op­er­a­tion at com­pile time.</p>
@@ -107,10 +106,10 @@ And thus spe­cify that shape of an ef­fect­ful op­er­a­tion at com­pile t
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> <span class="dt">State</span><span class="ot"> ::</span> <span class="dt">Type</span> <span class="ot">-&gt;</span> <span class="dt">Op­Sort</span> <span class="ot">-&gt;</span> <span class="dt">Type</span> <span class="ot">-&gt;</span> <span class="dt">Type</span></span>
 <span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> <span class="dt">State</span> s <span class="fu">sort</span> a <span class="kw">where</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">Get</span><span class="ot"> ::</span> <span class="dt">State</span> s <span class="dt">'G</span> s</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="dt">Put</span><span class="ot"> ::</span> s <span class="ot">-&gt;</span> <span class="dt">State</span> s <span class="dt">'P</span> ()</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">Get</span><span class="ot"> ::</span> <span class="dt">State</span> s <span class="dt">G</span> s</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="dt">Put</span><span class="ot"> ::</span> s <span class="ot">-&gt;</span> <span class="dt">State</span> s <span class="dt">P</span> ()</span>
 <span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="ot">modify ::</span> (s <span class="ot">-&gt;</span> s) <span class="ot">-&gt;</span> <span class="dt">Free</span> (<span class="dt">State</span> s) '[ <span class="dt">'G</span>, <span class="dt">'P</span> ] ()</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="ot">modify ::</span> (s <span class="ot">-&gt;</span> s) <span class="ot">-&gt;</span> <span class="dt">Free</span> (<span class="dt">State</span> s) [<span class="dt">G</span>, <span class="dt">P</span>] ()</span>
 <span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>modify f <span class="ot">=</span> </span>
 <span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  <span class="dt">Bind</span> <span class="dt">Get</span> <span class="op">$</span> \s <span class="ot">-&gt;</span> <span class="dt">Put</span> (f s)</span></code></pre></div>
 <h2 id="regular-effect-protocols">Reg­u­lar Ef­fect Pro­to­cols</h2>
@@ -157,21 +156,21 @@ As we wish to min­im­ise the amount of equa­tional reas­on­ing the com­pil
 <p>The third type fam­ily, which defines the de­riv­at­ive op­er­a­tion, is <code class="sourceCode haskell"><span class="dt">Delta</span></code>.
 It takes two para­met­ers: an ob­served op­er­a­tion <code>i</code>, and the reg­u­lar ex­pres­sion <code>r</code>.
 The out­put is a reg­u­lar ex­pres­sion whose lan­guage con­tains strings that can be pre­pen­ded with <code>i</code> to make an ele­ment of the lan­guage defined by <code>r</code>.</p>
-<pre><code>type Delta :: i -&gt; Regex i -&gt; Regex i
-type fam­ily Delta i r where
-  Delta i Empty = Empty
-  Delta i Ep­si­lon = Empty
-  Delta i (Unit i) = Ep­si­lon
-  Delta i (Unit j) = Empty -- Here we know that i and j are dis­tinct
-  Delta i (r :. s) =
-    (Delta i r :. s) :|| -- Either i is con­sumed by r,
-      (Nu r :. Delta i s) -- or r can be the empty string and i is con­sumed by s
-  Delta i (r :&amp;&amp; s) =
-    Delta i r :&amp;&amp; Delta i s
-  Delta i (r :|| s) =
-    Delta i r :|| Delta i s
-  Delta i (Star r) =
-    Delta i (r :. Star r) -- Un­fold Kleene star</code></pre>
+<div class="sourceCode" id="cb9"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> <span class="dt">Delta</span><span class="ot"> ::</span> i <span class="ot">-&gt;</span> <span class="dt">Regex</span> i <span class="ot">-&gt;</span> <span class="dt">Regex</span> i</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> <span class="kw">fam­ily</span> <span class="dt">Delta</span> i r <span class="kw">where</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">Delta</span> i <span class="dt">Empty</span> <span class="ot">=</span> <span class="dt">Empty</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">Delta</span> i <span class="dt">Ep­si­lon</span> <span class="ot">=</span> <span class="dt">Empty</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">Delta</span> i (<span class="dt">Unit</span> i) <span class="ot">=</span> <span class="dt">Ep­si­lon</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">Delta</span> i (<span class="dt">Unit</span> j) <span class="ot">=</span> <span class="dt">Empty</span> <span class="co">-- Here we know that i and j are dis­tinct</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  <span class="dt">Delta</span> i (r <span class="op">:.</span> s) <span class="ot">=</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    (<span class="dt">Delta</span> i r <span class="op">:.</span> s) <span class="op">:||</span> <span class="co">-- Either i is con­sumed by r,</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>      (<span class="dt">Nu</span> r <span class="op">:.</span> <span class="dt">Delta</span> i s) <span class="co">-- or r can be the empty string and i is con­sumed by s</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>  <span class="dt">Delta</span> i (r <span class="op">:&amp;&amp;</span> s) <span class="ot">=</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>    <span class="dt">Delta</span> i r <span class="op">:&amp;&amp;</span> <span class="dt">Delta</span> i s</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>  <span class="dt">Delta</span> i (r <span class="op">:||</span> s) <span class="ot">=</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>    <span class="dt">Delta</span> i r <span class="op">:||</span> <span class="dt">Delta</span> i s</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>  <span class="dt">Delta</span> i (<span class="dt">Star</span> r) <span class="ot">=</span></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>    <span class="dt">Delta</span> i (r <span class="op">:.</span> <span class="dt">Star</span> r) <span class="co">-- Un­fold Kleene star</span></span></code></pre></div>
 <h2 id="putting-it-all-together">Put­ting it all to­gether</h2>
 <p>Now we have an ap­pro­pri­ate way of passing type in­form­a­tion to sub­trees, we can define a free monad in­dexed not by a list of op­er­a­tions but by a reg­u­lar lan­guage of op­er­a­tions.
 In the case of <code class="sourceCode haskell"><span class="dt">Pure</span></code>, we need to know that the empty string is ac­cep­ted by the pro­tocol.
@@ -182,22 +181,23 @@ For the <code class="sourceCode haskell"><span class="dt">Bind</span></code> con
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">Pure</span><span class="ot"> ::</span> <span class="dt">Nu</span> r <span class="op">~</span> <span class="dt">Ep­si­lon</span> <span class="ot">=&gt;</span> a <span class="ot">-&gt;</span> <span class="dt">Free</span> f r a</span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">Bind</span><span class="ot"> ::</span> f i a <span class="ot">-&gt;</span> (a <span class="ot">-&gt;</span> <span class="dt">Free</span> f (<span class="dt">Delta</span> i r) b) <span class="ot">-&gt;</span> <span class="dt">Free</span> f r b</span>
 <span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> <span class="dt">Pro­tocol</span> <span class="ot">=</span></span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="dt">Star</span> (<span class="dt">G</span> <span class="op">:.</span> <span class="dt">P</span>)</span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="co">-- This func­tion will type check.</span></span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="ot">safe ::</span> <span class="dt">Free</span> (<span class="dt">State</span> <span class="dt">Int</span>) <span class="dt">Pro­tocol</span> ()</span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>safe <span class="ot">=</span> </span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>  modify (s <span class="op">+</span> <span class="dv">1</span>)</span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a><span class="co">-- This func­tion will not type check!</span></span>
-<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a><span class="ot">un­safe ::</span> <span class="dt">Free</span> (<span class="dt">State</span> <span class="dt">Int</span>) <span class="dt">Pro­tocol</span> ()</span>
-<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>un­safe <span class="ot">=</span></span>
-<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>  <span class="dt">Bind</span> <span class="dt">Get</span> <span class="op">$</span> \s <span class="ot">-&gt;</span> <span class="dt">Pure</span> ()</span></code></pre></div>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> <span class="dt">Pro­tocol</span><span class="ot"> ::</span> <span class="dt">Regex</span> <span class="dt">Get­Put</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> <span class="dt">Pro­tocol</span> <span class="ot">=</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  <span class="dt">Star</span> (<span class="dt">Unit</span> <span class="dt">G</span> <span class="op">:.</span> <span class="dt">Unit</span> <span class="dt">P</span>)</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="co">-- This func­tion will type check.</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="ot">safe ::</span> <span class="dt">Free</span> (<span class="dt">State</span> <span class="dt">Int</span>) <span class="dt">Pro­tocol</span> ()</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>safe <span class="ot">=</span> </span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>  modify (s <span class="op">+</span> <span class="dv">1</span>)</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a><span class="co">-- This func­tion will not type check!</span></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a><span class="ot">un­safe ::</span> <span class="dt">Free</span> (<span class="dt">State</span> <span class="dt">Int</span>) <span class="dt">Pro­tocol</span> ()</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>un­safe <span class="ot">=</span></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>  <span class="dt">Bind</span> <span class="dt">Get</span> <span class="op">$</span> \s <span class="ot">-&gt;</span> <span class="dt">Pure</span> ()</span></code></pre></div>
 <p>This in­dexed monad is quite neat be­cause we can now stat­ic­ally verify that only one of these two func­tions ac­tu­ally meets our pro­tocol.
 However, it is lim­ited to ex­pli­cit se­quences of op­er­a­tions be­cause the de­riv­at­ive is com­puted with re­spect to a given prim­it­ive op­er­a­tions, not an­other pro­tocol.
 It is worth not­ing that reg­u­lar lan­guages are also closed un­der quo­tient­ing, a gen­er­al­isa­tion of the de­riv­at­ive op­er­ator that would al­low for the com­pos­i­tion of ar­bit­rary ef­fect­ful func­tions.
-Nev­er­the­less, this toy im­ple­ment­a­tion does demon­strate that or­gan­ising struc­tures along al­geb­raic lines can serve not just the pro­gram­mer but the com­piler too.</p>
+Nev­er­the­less, this toy im­ple­ment­a­tion does demon­strate that or­gan­ising data struc­tures in the man­ner pro­posed by McBride can in­deed lessen the bur­den on the com­piler.</p>
     </main>
 
     <footer>
