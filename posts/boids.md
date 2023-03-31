@@ -1,6 +1,6 @@
 ---
 title: Comonadic Boids
-date: March 2023
+date: April 2021
 ---
 
 Nature's ability to organise itself is not just impressive but often beautiful too.
@@ -25,13 +25,13 @@ Monads have been widely adopted in the functional programming community, but the
 Although monads play a broad and important role in category theory, for a programmer they are essentially a convention for adding structure to the output of a function.
 In particular, they allows us to clearly delineate its "true" result `b` from any side-effects `m`:
 
-``` {.haskell}
+```haskell
 effectulFunction :: Monad m => a -> m b
 ```
 
 Of course, this convention is meaningless without some laws. For monads, the laws concern the composition of effectful functions and the ability to lift pure functions into this richer context. Effectful functions must behave somewhat like pure functions in that composition is associative and has an identity. 
 
-``` {.haskell}
+```haskell
 class Monad m where
   return :: a -> m a
   (>>=) :: m a -> (a -> m b) -> m b
@@ -41,7 +41,7 @@ Similarly, comonads add structure to the input focusing on some subsection of th
 In our case, the focus is an individual boid, whereas the context contains the relative position of the rest of the flock, i.e. resources that influence but are not influenced by the updating of an individual boid.
 Ultimately, the distinction will depend on the application as with monads. 
 
-``` {.haskell}
+```haskell
 coeffectfulFunction :: Comonad w => w a -> b
 ```
 

@@ -96,15 +96,17 @@ a:hover {
   cursor: pointer
 }
 
-figure {
-  width: 50%;
-  float: right;
-  position: relative;
-}
-
 img {
   width: 100%;
   object-fit: contain;
+}
+
+@media screen and (min-width: 500px) {
+  figure {
+    width: 50%;
+    float: right;
+    position: relative;
+  }
 }
 
 .sourceCode pre {

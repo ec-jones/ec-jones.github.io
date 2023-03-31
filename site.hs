@@ -5,6 +5,7 @@ import Data.Time.Format
 import Hakyll
 import Text.HTML.TagSoup
 import Text.Hyphenation
+import Data.Ord
 
 main :: IO ()
 main = hakyllWith defaultConfiguration { destinationDirectory = "docs" } $ do
@@ -16,7 +17,7 @@ main = hakyllWith defaultConfiguration { destinationDirectory = "docs" } $ do
   match "css/*" $ do
     route idRoute
     compile compressCssCompiler
-
+    
   match "resources/*" $ do
     route idRoute
     compile copyFileCompiler
@@ -51,11 +52,11 @@ main = hakyllWith defaultConfiguration { destinationDirectory = "docs" } $ do
 -- Sort posts by date.
 sortPosts :: [Item String] -> Compiler [Item String]
 sortPosts =
-  let go :: Item String -> Compiler (Item String, Month)
+  let go :: Item String -> Compiler (Item String, Down Month)
       go post = do
         date <- getMetadataField' (itemIdentifier post) "date"
         date' <- parseTimeM True defaultTimeLocale "%B %Y" date
-        pure (post, date')
+        pure (post, Down date')
    in fmap (fmap fst . List.sortOn snd) . mapM go
 
 -- Hyphenate paragraphs
