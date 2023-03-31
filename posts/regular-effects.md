@@ -213,4 +213,4 @@ unsafe =
 This indexed monad is quite neat because we can now statically verify that only one of these two functions actually meets our protocol.
 However, it is limited to explicit sequences of operations because the derivative is computed with respect to a given primitive operations, not another protocol.
 It is worth noting that regular languages are also closed under quotienting, a generalisation of the derivative operator that would allow for the composition of arbitrary effectful functions.
-Nevertheless, this toy implementation does demonstrate that organising structures along algebraic lines can serve not just the programmer but the compiler too.
+Nevertheless, this toy implementation does demonstrate that organising data structures in the manner proposed by McBride can indeed lessen the burden on the compiler.
