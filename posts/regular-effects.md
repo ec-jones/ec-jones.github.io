@@ -83,13 +83,12 @@ However, we further require that a monad's grading is a monoid, so it has a sens
 
 As we are concerned with the free monad a good place to start is with the free monoid, i.e. lists. 
 Considering signatures that are themselves indexed by some type `i`, we can index monadic expressions as either the empty list for the `Pure`{.haskell} constructor, indicating that it has no effect, or by prepending the index of a primitive operation to those of the continuation for the `Bind`{.haskell} constructor.
-Here the ticked constructors (e.g. `'[]`) merely indicate that we have promoted them to the type-level.
 
 ```haskell
 type Free :: (i -> Type) -> [i] -> Type -> Type
 data Free f ix a where
-  Pure :: a -> f '[] a
-  Bind :: f i a -> (a -> f ix b) -> f (i ': ix) b
+  Pure :: a -> f [] a
+  Bind :: f i a -> (a -> f ix b) -> f (i : ix) b
 ```
 
 We can now enrich our effect signature with an index that distinguishes between different sorts of primitive operation.
@@ -102,10 +101,10 @@ data OpSort
 
 type State :: Type -> OpSort -> Type -> Type
 data State s sort a where
-  Get :: State s 'G s
-  Put :: s -> State s 'P ()
+  Get :: State s G s
+  Put :: s -> State s P ()
 
-modify :: (s -> s) -> Free (State s) '[ 'G, 'P ] ()
+modify :: (s -> s) -> Free (State s) [G, P] ()
 modify f = 
   Bind Get $ \s -> Put (f s)
 ```
@@ -196,8 +195,9 @@ data Free f r a where
   Pure :: Nu r ~ Epsilon => a -> Free f r a
   Bind :: f i a -> (a -> Free f (Delta i r) b) -> Free f r b
 
+type Protocol :: Regex GetPut
 type Protocol =
-  Star (G :. P)
+  Star (Unit G :. Unit P)
 
 -- This function will type check.
 safe :: Free (State Int) Protocol ()
