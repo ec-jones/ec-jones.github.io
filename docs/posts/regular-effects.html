@@ -194,11 +194,10 @@ For the <code class="sourceCode haskell"><span class="dt">Bind</span></code> con
 <span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a><span class="ot">un­safe ::</span> <span class="dt">Free</span> (<span class="dt">State</span> <span class="dt">Int</span>) <span class="dt">Pro­tocol</span> ()</span>
 <span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>un­safe <span class="ot">=</span></span>
 <span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>  <span class="dt">Bind</span> <span class="dt">Get</span> <span class="op">$</span> \s <span class="ot">-&gt;</span> <span class="dt">Pure</span> ()</span></code></pre></div>
-<p>This in­dexed monad is really quite neat be­cause we can now stat­ic­ally verify that only one of these two func­tions ac­tu­ally meets our pro­tocol.
-It is not a pan­acea though.
-We can­not, for ex­ample, dir­ectly com­pose mon­adic op­er­a­tions defined in this man­ner.
-In­tu­it­ively, this is be­cause the type-checker is ex­pect­ing to verify a pro­tocol against a se­quence of prim­it­ive op­er­a­tions, not an­other pro­tocol.
-It does go to show, however, that or­gan­ising struc­tures along al­geb­raic lines can serve not just the pro­gram­mer but the com­piler too.</p>
+<p>This in­dexed monad is quite neat be­cause we can now stat­ic­ally verify that only one of these two func­tions ac­tu­ally meets our pro­tocol.
+However, it is lim­ited to ex­pli­cit se­quences of op­er­a­tions be­cause the de­riv­at­ive is com­puted with re­spect to a given prim­it­ive op­er­a­tions, not an­other pro­tocol.
+It is worth not­ing that reg­u­lar lan­guages are also closed un­der quo­tient­ing, a gen­er­al­isa­tion of the de­riv­at­ive op­er­ator that would al­low for the com­pos­i­tion of ar­bit­rary ef­fect­ful func­tions.
+Nev­er­the­less, this toy im­ple­ment­a­tion does demon­strate that or­gan­ising struc­tures along al­geb­raic lines can serve not just the pro­gram­mer but the com­piler too.</p>
     </main>
 
     <footer>
