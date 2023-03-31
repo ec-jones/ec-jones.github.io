@@ -164,7 +164,7 @@ The third type family, which defines the derivative operation, is `Delta`{.haske
 It takes two parameters: an observed operation `i`, and the regular expression `r`.
 The output is a regular expression whose language contains strings that can be prepended with `i` to make an element of the language defined by `r`.
 
-```
+```haskell
 type Delta :: i -> Regex i -> Regex i
 type family Delta i r where
   Delta i Empty = Empty
