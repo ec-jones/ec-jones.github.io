@@ -1,0 +1,239 @@
+\documentclass{article}
+\usepackage[british]{babel}
+
+\usepackage[margin=1cm]{geometry}
+\usepackage{changepage}
+
+% Fancy underline
+\usepackage{ulem}
+
+% A nicer font
+\usepackage{tgpagella}
+\usepackage[T1]{fontenc}
+\renewcommand{\emph}[1]{\textit{#1}}
+
+% Hyperlinks
+\usepackage{hyperref}
+\hypersetup{
+  colorlinks = true
+}
+
+% Suppress page no.
+\pagenumbering{gobble}
+
+% Indent bullet list
+\newenvironment{tight-list}[1]{
+  \vspace{5pt}
+  \begin{adjustwidth}{15pt}{0pt}
+  \begin{itemize}
+    \setlength{\itemsep}{#1}
+    \setlength{\parskip}{0pt}
+    \setlength{\parsep}{0pt} 
+}
+{
+  \end{itemize}
+  \end{adjustwidth}
+  \vspace{15pt}
+} 
+
+\begin{document}
+
+
+\begin{minipage}[t]{0.7\textwidth}
+  \raggedright{}
+  {\LARGE\textbf{Eddie Jones}}
+  \vspace{10pt}
+
+  \href{https://ec-jones.github.io}{https://ec-jones.github.io}\\
+  \href{mailto:eddie.c.jones@pm.me}{eddie.c.jones@pm.me}
+
+  \vspace{15pt}
+  I'm a PhD candidate at the University of Bristol, with a broad interest in functional programming, verification, and programming languages in general.
+  I'm currently work on an automated inductive theorem prover for equational reasoning, an appealing style of reasoning as they are accessible to the everyday programmer
+\end{minipage}
+\begin{minipage}[t]{0.25\textwidth}
+  \raggedleft{}
+  \vspace{15pt}
+  6 Rousham Road\\
+  Bristol\\
+  BS5 6XJ\\
+  +447483 222495
+\end{minipage}
+
+\vspace{20pt}
+
+\uline{{\large PUBLICATIONS}\hfill}
+
+\vspace{10pt}
+
+\textbf{\href{https://arxiv.org/abs/2210.14649}{Higher-order MSL} --- POPL} \hfill 2022
+\begin{tight-list}{5pt}
+\item The monadic shallow linear (MSL) class of Horn clauses is a decidable fragment of first-order logic. Our most recent work proposes an extensions to higher-order logic intended to capture the complex control flow patterns found in higher-order programming languages. We show that our fragment is interreducible with higher-order recursion schemes, the traditional approach to higher-order model checking, and show that it too is decidable by a resolution-based decision procedure.
+\item As an application, we consider a novel lightweight approach to verifying socket programs that could be extended to effectful programs in general. 
+\end{tight-list}
+
+\textbf{\href{https://arxiv.org/abs/2111.12553}{CycleQ:\ An efficient basis for cyclic equational reasonings} --- PLDI} \hfill 2022
+\begin{tight-list}{5pt}
+\item Cyclic proofs are an alternative to traditional inductive proofs that eschew explicit induction hypotheses. The advantage of this is that they naturally extend to mutual induction, somewhat mitigating the difficulties that arise from induction being non-analytic, i.e.\ the need to strengthen induction hypotheses, and are well-suited to goal-orientated proof search. Unfortunately, existing proof search algorithms for these systems don't perform well in an equational setting. We observe why this is the case and develop a new cyclic proof system/proof search algorithm that seamlessly handles equational reasoning.
+\item As part of this work, we showed that, despite being very simple, our proof system subsumes the various approaches to inductive equational reasoning that come under the family of ``inductionless induction''. We also developed an efficient mechanism for verifying the correctness of proofs that takes advantage of the size-change principle of program termination.
+\item This publication provided me with a great opportunity to present our research to and get feedback from an international audience.
+\end{tight-list}
+
+\textbf{\href{https://arxiv.org/abs/2008.01452}{Intensional Datatype Refinement} --- POPL} \hfill 2021
+\begin{tight-list}{5pt}
+\item In this paper, we presented a higher-order program analysis that detects potential runtime errors that may occur due to incomplete pattern-matching expression.
+Unlike previous approaches, we tackled the issue of performance without significantly compromising on expressivity.
+The analysis infers polymorphic and path-sensitive types allowing for more modular usage.
+By uncovering the right restrictions, we created a compositional analysis that is ultimately linear in the size of the program.
+Thus, allowing it to rolled out on larger scales.
+Its performance is witnessed not just by a formal complexity guarantee but also by an efficient implementation that we developed as a plugin for the Glasgow Haskell Compiler.
+\end{tight-list}
+
+\vspace{5pt}
+
+\uline{{\large EDUCATION}\hfill}
+
+\vspace{10pt}
+
+\textbf{PhD Computer Science --‐ University of Bristol} \hfill 2019 --- \phantom{ 2021}
+\begin{tight-list}{0pt}
+\item Oregon Programming Languages Summer School (2021)
+\item Midlands Graduate School in the Foundations of Computing Science (2021)
+\end{tight-list}
+
+\textbf{BSc (Hons) Mathematics and Computer Science --‐ University of Bristol} \hfill 2016 --- 2019
+\begin{tight-list}{10pt}
+\item I wholeheartedly enjoyed my degree despite the increased challenges of joint honours.
+I found that fluency in mathematical thinking gave me the analytical skills necessary to shed new light on the practical challenges faced in computer science.
+I averaged 85\% across a range of modules including:
+
+\begin{tabular}{p{0.28\textwidth}p{0.2\textwidth}p{0.35\textwidth}}
+  \raggedright{}
+  \begin{itemize}
+    \item Language Engineering
+    \item Theory of Computation
+    \item Types \& Lambda Calculus
+  \end{itemize}
+
+   &
+  \raggedright{}
+  \begin{itemize}
+    \item Set Theory
+    \item Combinatorics
+    \item Dynamic Systems
+  \end{itemize}
+
+   &
+  \raggedright{}
+  \begin{itemize}
+    \item Machine Learning
+    \item AI \& Logic Programming
+    \item \mbox{Computational Neuroscience}
+  \end{itemize}
+\end{tabular}
+\vspace{-10pt}
+
+\item Research experience:
+\begin{itemize}
+  \item \emph{The Dynamics of Dialects}. For my undergraduate dissertation, I used a model of natural language acquisition to investigate how social networks influence the propagation of cultural symbols through a series of simulations. It received a first-class mark of 87\%.
+  \item \emph{Applied Optimisation Research Internship}. In my second year, I was a research intern. This project considered the problem of designing a car park layout for a given space that maximised the number of cars. It involved a satisfying mix of calculus, geometry, and simulation (mostly in MATLAB).
+\end{itemize}
+
+\item Awards:
+\begin{itemize}
+  \item Top Mathematics and Computer Science Graduate 2019
+  \item Top 10 Second Year Student in Computer Science, awarded by Netcraft
+  \item Top 5 First Year Student in Computer Science, awarded by Bank of America Merrill Lynch
+\end{itemize}
+\end{tight-list}
+
+\textbf{A levels --- Peter Symonds College} \hfill 2014 --- 2016
+\begin{tight-list}{0pt}
+\item Mathematics A*
+\item Further Mathematics A
+\item Physics A
+\item (AS) Economics A
+\end{tight-list}
+
+\textbf{Swanmore College of Technology} \hfill 2009 --- 2014
+\begin{tight-list}{0pt}
+\item 13 GCSE including Mathematics, Science, English, and French.
+\end{tight-list}
+
+\vspace{5pt}
+
+\uline{{\large TEACHING}\hfill}
+\vspace{10pt}
+
+\textbf{Teaching Assistant} \hfill 2018 --- \phantom{2021}
+\begin{tight-list}{10pt}
+\item I have always enjoyed conveying my passions for subjects, and so I was delighted to get some experience as a teaching assistant. Across the following units, I lead problem classes, helped the students in labs, as well as producing and marking homework sheets:
+
+\begin{tabular}{p{0.3\textwidth}p{0.6\textwidth}}
+  \begin{itemize}
+    \item Language Engineering
+    \item Theory of Computation
+    \item Functional Programming
+  \end{itemize}
+   &
+  \begin{itemize}
+    \item Types \& Lambda Calculus
+    \item Data Structures \& Algorithms
+    \item Advanced Topics in Programming Languages
+  \end{itemize}
+\end{tabular}
+\vspace{-10pt}
+
+\item I have also taken on the role of program-level teaching assistant that involves leading tutorials designed to cross module boundaries and encourage the students to think outside the box. These flexible sessions have been particularly enjoyable as it more naturally leads to a rapport with the students.
+\end{tight-list}
+
+\vspace{5pt}
+
+\uline{{\large LANGUAGES \& TOOLS}\hfill}
+\vspace{10pt}
+
+\begin{tight-list}{0pt}
+\item[]
+\begin{tabular}{p{0.3\textwidth}p{0.2\textwidth}p{0.2\textwidth}}
+  \raggedright{}
+  \textbf{Advanced}
+  \begin{itemize}
+    \item Haskell
+    \item Functional Programming
+    \item Mathematics
+  \end{itemize}
+
+   &
+  \raggedright{}
+  \textbf{Experience With}
+  \begin{itemize}
+    \item C
+    \item Python
+    \item \LaTeX{}
+  \end{itemize}
+
+   &
+  \raggedright{}
+  \begin{itemize}
+    \item Rust
+    \item Git
+    \item Linux
+  \end{itemize}
+\end{tabular}
+\vspace{-10pt}
+\end{tight-list}
+
+\vspace{5pt}
+
+\uline{{\large HOBBIES \& INTERESTS}\hfill}
+\vspace{10pt}
+
+\begin{adjustwidth}{15pt}{0pt}
+  Apart from computer science, I generally enjoy being physically active.
+  For many years, I practiced Taekwondo up-to a 2\textsuperscript{nd} Dan black belt, but my current obsession is bouldering.
+
+  I also love reading and rarely have fewer than two books on the go.
+  Some of my favourite genres include sci-fi, history and philosophy.
+\end{adjustwidth}
+
+\end{document}

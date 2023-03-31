@@ -1,2 +1,11 @@
 /_cache
+
 /dist-newstyle
+
+/resources/cv/*.aux
+/resources/cv/*.fdb_latexmk
+/resources/cv/*.fls
+/resources/cv/*.log
+/resources/cv/*.out
+/resources/cv/*.pdf
+/resources/cv/*.synctex.gz

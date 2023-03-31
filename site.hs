@@ -1,26 +1,31 @@
 import Data.Char
 import Data.List qualified as List
+import Data.Ord
 import Data.Time.Calendar.Month
 import Data.Time.Format
 import Hakyll
 import Text.HTML.TagSoup
 import Text.Hyphenation
-import Data.Ord
 
 main :: IO ()
-main = hakyllWith defaultConfiguration { destinationDirectory = "docs" } $ do
+main = hakyllWith defaultConfiguration {destinationDirectory = "docs"} $ do
   -- Load templates
   match "templates/*" $
     compile templateBodyCompiler
 
-  -- Load stylesheets and resources
+  -- Load stylesheets
   match "css/*" $ do
     route idRoute
     compile compressCssCompiler
-    
-  match "resources/*" $ do
-    route idRoute
-    compile copyFileCompiler
+
+  -- Load resources
+  match
+    ( ("resources/*" .&&. complement "resources/cv/*")
+        .||. "resources/cv/cv.pdf"
+    )
+    $ do
+      route (gsubRoute "resources/cv/" (const "resources/"))
+      compile copyFileCompiler
 
   -- Compile posts
   match "posts/*" $ do
