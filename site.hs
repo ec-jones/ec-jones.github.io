@@ -21,7 +21,7 @@ main = hakyllWith defaultConfiguration {destinationDirectory = "docs"} $ do
   -- Load resources
   match
     ( ("resources/*" .&&. complement "resources/cv/*")
-        .||. "resources/cv/cv.pdf"
+        .||. "resources/cv/Eddie Jones - CV.pdf"
     )
     $ do
       route (gsubRoute "resources/cv/" (const "resources/"))
