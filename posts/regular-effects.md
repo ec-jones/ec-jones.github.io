@@ -5,7 +5,7 @@ date: June 2021
 
 # Indexed Datatypes
 
-In his [ICFP paper](https://strathprints.strath.ac.uk/51678/7/McBride_ICFP_2014_How_to_keep_your_neighbours_in_order.pdf) from 2014, Conor McBride gives an experience report on writing a correct-by-construction sorted data strucutre in the depdently-typed programming language Agda.
+In his [ICFP paper](https://strathprints.strath.ac.uk/51678/7/McBride_ICFP_2014_How_to_keep_your_neighbours_in_order.pdf) from 2014, Conor McBride gives an experience report on writing a correct-by-construction sorted data strucutre in the dependently typed programming language Agda.
 His first attempt involves so called *measures* which are also an important aspect of the [Liquid Haskell](https://ucsd-progsys.github.io/liquidhaskell/) system.
 The following data declaration represents the list datatype enriched with a length measure. Informally, a refinement type `{ x | p(x) }` is inhabitted by an element `e` just if `p(e)` holds.
 

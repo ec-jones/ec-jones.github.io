@@ -8,13 +8,17 @@
     <meta name="keywords" content="Computer Science, Formal Verification, Functional Programming, Haskell">
     <meta name="author" content="Eddie Jones">
 
-    <link rel="icon" href="../resources/icon.png">
+    <!-- Display formulas -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>    
 
+    <!-- Fonts -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Fira+Code" rel="stylesheet">
-
+    
+    <link rel="icon" href="../resources/icon.png">
     <link href="../css/default.css" rel="stylesheet">
-
+    
     <title>Regular Effects</title>
 </head>
 
@@ -38,7 +42,7 @@
 
     <main role="main">
         <h1 id="indexed-datatypes">In­dexed Data­types</h1>
-<p>In his <a href="https://strathprints.strath.ac.uk/51678/7/McBride_ICFP_2014_How_to_keep_your_neighbours_in_order.pdf">ICFP pa­per</a> from 2014, Conor McBride gives an ex­per­i­ence re­port on writ­ing a cor­rect-by-­con­struc­tion sor­ted data struc­utre in the de­p­dently-­typed pro­gram­ming lan­guage Ag­da.
+<p>In his <a href="https://strathprints.strath.ac.uk/51678/7/McBride_ICFP_2014_How_to_keep_your_neighbours_in_order.pdf">ICFP pa­per</a> from 2014, Conor McBride gives an ex­per­i­ence re­port on writ­ing a cor­rect-by-­con­struc­tion sor­ted data struc­utre in the de­pend­ently typed pro­gram­ming lan­guage Ag­da.
 His first at­tempt in­volves so called <em>meas­ures</em> which are also an im­port­ant as­pect of the <a href="https://ucsd-progsys.github.io/liquidhaskell/">Li­quid Haskell</a> sys­tem.
 The fol­low­ing data de­clar­a­tion rep­res­ents the list data­type en­riched with a length meas­ure. In­form­ally, a re­fine­ment type <code>{ x | p(x) }</code> is in­hab­it­ted by an ele­ment <code>e</code> just if <code>p(e)</code> holds.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> <span class="dt">List</span> a <span class="kw">where</span></span>

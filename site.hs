@@ -6,6 +6,7 @@ import Data.Time.Format
 import Hakyll
 import Text.HTML.TagSoup
 import Text.Hyphenation
+import Text.Pandoc
 
 main :: IO ()
 main = hakyllWith defaultConfiguration {destinationDirectory = "docs"} $ do
@@ -32,7 +33,9 @@ main = hakyllWith defaultConfiguration {destinationDirectory = "docs"} $ do
     route $ setExtension "html"
 
     compile $
-      pandocCompiler
+      pandocCompilerWith defaultHakyllReaderOptions defaultHakyllWriterOptions { 
+            writerHTMLMathMethod = MathJax ""
+              }
         >>= ( loadAndApplyTemplate "templates/default.html" defaultContext
                 . hyphenateHtml
             )
@@ -67,11 +70,21 @@ sortPosts =
 -- Hyphenate paragraphs
 hyphenateHtml :: Item String -> Item String
 hyphenateHtml item =
-  let go :: Tag String -> Tag String
-      go (TagText text) =
-        TagText (hyphenateText text)
-      go nonTextTag = nonTextTag
-   in itemSetBody (withTagList (fmap go) $ itemBody item) item
+  let go :: Mode -> Tag String -> (Mode, Tag String)
+      go _ (TagOpen "span" attr)
+        | Just cls <- lookup "class" attr,
+          "math" `List.isPrefixOf` cls =
+            -- Enter maths mode, i.e. don't hyphenate.
+            (MathMode, TagOpen "span" attr)
+      go _ (TagClose "span") =
+        -- Exit maths mode, i.e. return to text mode.
+        -- Maths is assumed to not contain any spans.
+        (TextMode, TagClose "span")
+      go TextMode (TagText text) =
+         -- Only hyphenate in text mode.
+        (TextMode, TagText (hyphenateText text))
+      go mode nonTextTag = (mode, nonTextTag)
+   in itemSetBody (withTagList (snd . List.mapAccumL go TextMode) $ itemBody item) item
   where
     hyphenateText :: String -> String
     hyphenateText str
@@ -82,3 +95,7 @@ hyphenateHtml item =
            in whiteSpace
                 ++ List.intercalate "\x00ad" (hyphenate english_GB word)
                 ++ hyphenateText str''
+
+data Mode
+  = TextMode
+  | MathMode

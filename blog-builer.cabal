@@ -10,9 +10,10 @@ executable site
 
   build-depends:      base,
                       time,
-                      hakyll,
+                      hakyll <4.16,
                       hyphenation,
-                      tagsoup
+                      tagsoup,
+                      pandoc <2.20
 
   default-extensions: OverloadedStrings
                       ImportQualifiedPost
