@@ -8,12 +8,12 @@ build-type:         Simple
 executable site
   main-is:            site.hs
 
-  build-depends:      base,
+  build-depends:      base >=4.12 && <5,
                       time,
-                      hakyll <4.16,
+                      hakyll >= 4.15.0,
                       hyphenation,
                       tagsoup,
-                      pandoc <2.20
+                      pandoc
 
   default-extensions: OverloadedStrings
                       ImportQualifiedPost
