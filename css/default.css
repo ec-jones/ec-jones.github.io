@@ -41,6 +41,13 @@ footer {
   text-decoration: none;
 }
 
+.subtitle {
+  /* display: inline; */
+  vertical-align: bottom;
+  font-weight: bolder;
+  color: var(--grey);
+}
+
 .description {
   display: inline;
   vertical-align: bottom;
