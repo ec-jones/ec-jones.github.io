@@ -101,7 +101,11 @@ ins {
     margin: 20px 0;
   }
 
+  header .description {
+    font-size: 15px;
+  }
+
   main {
-    font-size: 10px;
+    font-size: 15px;
   }
 }
