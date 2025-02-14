@@ -68,16 +68,40 @@ a:hover {
 /* Main Body */
 
 main {
-  font-size: 30px;
+  font-size: 25px;
 }
 
 del {
   text-decoration: line-through;
-  /* text-decoration-thickness: 0.2vw; */
   text-decoration-color: var(--red);
 }
 
 ins {
   font-style: italic;
   color: var(--blue);
+}
+
+/* Adjustment */
+
+
+@media screen and (max-width: 1250px) {
+  header {
+    font-size: 30px;
+    margin: 30px 0;
+  }
+
+  main {
+    font-size: 15px;
+  }
+}
+
+@media screen and (max-width: 775px) {
+  header {
+    font-size: 20px;
+    margin: 20px 0;
+  }
+
+  main {
+    font-size: 10px;
+  }
 }
