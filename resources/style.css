@@ -11,7 +11,7 @@
 body {
   margin: 0 auto;
   width: 75%;
-  /* max-width: 1000px; */
+  max-width: z;
   font-family: "Fira Code", sans-serif;
   color: var(--black);
   background-color: var(--white);
@@ -96,6 +96,10 @@ ins {
 }
 
 @media screen and (max-width: 775px) {
+  body {
+    width: 90%;
+  }
+  
   header {
     font-size: 20px;
     margin: 20px 0;
