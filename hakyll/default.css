@@ -1,0 +1,88 @@
+:root {
+  --white: #f5f5f5;
+  --black: #383a42;
+  --grey: #383a42bb;
+  --red: #e45649;
+  --blue: #0184bc;
+  --purple: #B4009E;
+  --green: #50A14F;
+}
+
+body {
+  margin: 0 auto;
+  width: 90%;
+  max-width: 1000px;
+  font-size: 1.5vw;
+  font-family: "Fira Code", sans-serif;
+  color: var(--black);
+  background-color: var(--white);
+}
+
+/* Header, Footer, Post-List
+
+header {
+  margin: 3vw 0;
+  font-weight: bolder;
+  border-bottom: thin solid var(--grey);
+}
+
+.title {
+  /* display: inline; */
+  font-size: 2.5vw;
+}
+
+.title a {
+  text-decoration: none;
+}
+
+.description {
+  display: inline;
+  vertical-align: bottom;
+  font-weight: bolder;
+  color: var(--grey);
+}
+
+del {
+  text-decoration: line-through;
+  text-decoration-thickness: 0.2vw;
+  text-decoration-color: var(--red);
+}
+
+ins {
+  font-style: italic;
+  color: var(--blue);
+}
+
+.contact {
+  text-align: right;
+}
+
+.contact a {
+  font-style: normal;
+  font-size: 2.5vw;
+  text-decoration: none;
+}
+
+.contact a .home {
+  font-size: smaller;
+  vertical-align: 5%;
+}
+
+/* Main Content */
+
+a,
+a:visited {
+  color: var(--black);
+  text-decoration: underline;
+  text-decoration-color: var(--blue);
+}
+
+a:hover {
+  color: var(--blue);
+  cursor: pointer
+}
+
+.section-header {
+  font-weight: bold;
+  /* border-bottom: thin solid var(--grey); */
+} */

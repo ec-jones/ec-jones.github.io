@@ -1,0 +1,83 @@
+:root {
+  --white: #f5f5f5;
+  --black: #383a42;
+  --grey: #383a42bb;
+  --red: #e45649;
+  --blue: #0184bc;
+  --purple: #B4009E;
+  --green: #50A14F;
+}
+
+body {
+  margin: 0 auto;
+  width: 75%;
+  /* max-width: 1000px; */
+  font-family: "Fira Code", sans-serif;
+  color: var(--black);
+  background-color: var(--white);
+}
+
+/* Header */
+
+header {
+  margin: 50px 0;
+  position: relative;
+  font-size: 3vw;
+  display: flex;
+  font-weight: bolder;
+  border-bottom: thin solid var(--grey);
+}
+
+.title {
+  flex-grow: 1;
+}
+
+.description {
+  color: var(--grey);
+}
+
+nav {
+  padding: 0 20px;
+  width: min-content;
+  overflow-y: auto;
+  overflow-x: hidden;
+  display:flex;
+    flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+nav a {
+  font-style: normal;
+  text-decoration: none;
+  display: block;
+}
+
+a,
+a:visited {
+  color: var(--black);
+  text-decoration: underline;
+  text-decoration-color: var(--blue);
+}
+
+a:hover {
+  color: var(--blue);
+  cursor: pointer
+}
+
+/* Main Body */
+
+main {
+  font-size: 1.5vw;
+}
+
+del {
+  text-decoration: line-through;
+  text-decoration-thickness: 0.2vw;
+  text-decoration-color: var(--red);
+}
+
+ins {
+  font-style: italic;
+  color: var(--blue);
+}

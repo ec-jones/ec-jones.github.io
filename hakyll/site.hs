@@ -28,28 +28,28 @@ main = hakyllWith defaultConfiguration {destinationDirectory = "docs"} $ do
       route (gsubRoute "resources/cv/" (const "resources/"))
       compile copyFileCompiler
 
-  -- Compile posts
-  match "posts/*" $ do
-    route $ setExtension "html"
+  -- -- Compile posts
+  -- match "posts/*" $ do
+  --   route $ setExtension "html"
 
-    compile $
-      pandocCompilerWith defaultHakyllReaderOptions defaultHakyllWriterOptions { 
-            writerHTMLMathMethod = MathJax ""
-              }
-        >>= ( loadAndApplyTemplate "templates/default.html" defaultContext
-                . hyphenateHtml
-            )
-        >>= relativizeUrls
+  --   compile $
+  --     pandocCompilerWith defaultHakyllReaderOptions defaultHakyllWriterOptions { 
+  --           writerHTMLMathMethod = MathJax ""
+  --             }
+  --       >>= ( loadAndApplyTemplate "templates/default.html" defaultContext
+  --               . hyphenateHtml
+  --           )
+  --       >>= relativizeUrls
 
   -- Compile index
   match "index.html" $ do
     route idRoute
     compile $ do
-      posts <- loadAll "posts/*"
+      publications <- loadAll "publications/*"
 
       let indexContext :: Context String
           indexContext =
-            listField "posts" defaultContext (sortPosts posts)
+            listField "publications" defaultContext (sortByDate publications)
               <> defaultContext
 
       getResourceBody
@@ -57,14 +57,14 @@ main = hakyllWith defaultConfiguration {destinationDirectory = "docs"} $ do
         >>= loadAndApplyTemplate "templates/default.html" indexContext
         >>= relativizeUrls
 
--- Sort posts by date.
-sortPosts :: [Item String] -> Compiler [Item String]
-sortPosts =
+-- Sort posts by date (expects month year).
+sortByDate :: [Item String] -> Compiler [Item String]
+sortByDate =
   let go :: Item String -> Compiler (Item String, Down Month)
-      go post = do
-        date <- getMetadataField' (itemIdentifier post) "date"
+      go item = do
+        date <- getMetadataField' (itemIdentifier item) "date"
         date' <- parseTimeM True defaultTimeLocale "%B %Y" date
-        pure (post, Down date')
+        pure (item, Down date')
    in fmap (fmap fst . List.sortOn snd) . mapM go
 
 -- Hyphenate paragraphs

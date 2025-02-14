@@ -1,0 +1,272 @@
+\documentclass[10pt]{letter}
+\usepackage[british]{babel}
+
+\usepackage[margin=2cm]{geometry}
+\pagenumbering{gobble} % Suppress page no.
+
+% Fancy underline
+\usepackage{ulem}
+
+% A nicer font
+\usepackage{tgpagella}
+\usepackage[T1]{fontenc}
+\renewcommand{\emph}[1]{\textit{#1}}
+
+% Hyperlinks
+\usepackage{xcolor}
+\usepackage{hyperref}
+\definecolor{UniversityRed}{RGB}{171,31,45}
+\hypersetup{
+  urlcolor = UniversityRed,
+  colorlinks = true
+}
+
+% Long version
+\newif\iflong
+\longtrue
+
+\begin{document}
+
+\begin{minipage}[t]{0.7\textwidth}
+  \raggedright{}
+  {\huge Eddie Jones}
+  \\[10pt]
+
+  \href{https://ec-jones.github.io}{https://ec-jones.github.io}\\
+  \href{mailto:eddie.jones@bristol.ac.uk}{eddie.jones@bristol.ac.uk} \\
+  \href{https://orcid.org/0000-0003-1762-5405}{ORCiD: 0000-0003-1762-5405}
+\end{minipage}
+\begin{minipage}[t]{0.29\textwidth}
+  \vfill
+
+  \raggedleft{}
+  6 Rousham Road\\
+  Bristol\\
+  BS5 6XJ\\
+  +447483 222495
+\end{minipage}
+
+\vspace{5pt}
+
+I am a lecturer in programming languages and compilers at the University of Bristol.
+My research to date has focused on lightweight methods for automatically verifying functional programs, including refinement type systems, decidable logics, and inductive reasoning systems.
+
+Interests: \textbf{program logics}, \textbf{cyclic proofs}, \textbf{under-approximate reasoning}, \textbf{equational reasoning}.
+
+\vspace{10pt}
+
+\uline{{\large PUBLICATIONS}\hfill}
+
+\vspace{5pt}
+
+\textbf{\href{https://dl.acm.org/doi/abs/10.1145/3571262}{Higher-order MSL Horn Clauses} --- POPL} \hfill January 2023
+
+Authors: Jerome Jochems, Eddie Jones, and Steven Ramsay.\\
+Publication: Proceedings of the ACM on Programming Languages, Volume 7, Issue POPL \( \bullet \) \href{https://doi.org/10.1145/3571262}{\textsc{doi}: 10.1145/3571262}.
+
+\vspace{10pt}
+
+\textbf{\href{https://dl.acm.org/doi/10.1145/3519939.3523731}{CycleQ} --- PLDI} \hfill June 2022\\
+\emph{an efficient basis for cyclic equational reasoning}
+
+Authors: Eddie Jones, C.-H. Luke Ong, and Steven Ramsay.\\
+Publication: Proceedings of the 43rd ACM SIGPLAN International Conference on Programming Language Design and Implementation \( \bullet \) \href{https://doi.org/10.1145/3519939.3523731}{\textsc{doi}: 10.1145/3519939.3523731}.
+
+\vspace{10pt}
+
+\textbf{\href{https://dl.acm.org/doi/10.1145/3434336}{Intensional datatype refinement} --- POPL} \hfill January 2021\\
+\emph{with application to scalable verification of pattern-match safety}
+
+Authors: Eddie Jones and Steven Ramsay.\\
+Publication: Proceedings of the ACM on Programming Languages, Volume 5, Issue POPL \( \bullet \) \href{https://doi.org/10.1145/3434336}{\textsc{doi}: 10.1145/3434336}.
+
+\vspace{10pt}
+
+\uline{{\large APPOINTMENTS}\hfill}
+
+\vspace{5pt}
+
+\textbf{Lecturer in Programming Languages and Compilers --- University of Bristol} \hfill 2023--\phantom{2023}
+
+\textbf{Research Associate on Taint-Analysis for Erlang --- University of Bristol} \hfill 2023--2023
+
+\iflong
+  \vspace{-5pt}
+  \begin{itemize}
+    \setlength\itemsep{0pt}
+    \item With funding from Meta, we pursued an extension of prior work on intensional datatype refinement type system to Erlang.
+          This project aims to statically approximate the flow of private information through a program in order to ensure compliance with data protection guidelines.
+  \end{itemize}
+\fi
+
+\textbf{Program-Level Teaching Assistant --- University of Bristol} \hfill 2021--2022
+
+\iflong
+  \begin{itemize}
+    \item As a program-level teaching assistant, I led tutorials designed to cross module boundaries and give students a more comprehensive understanding of computer science outside the curriculum. % These flexible sessions were particularly enjoyable as they could be catered to the students' needs and more naturally leads to a rapport.
+
+    \item I also contributed content to this series, designing worksheets on bisimulation and the topological aspects of functional programming languages.
+  \end{itemize}
+\fi
+
+\textbf{Teaching Assistant --- University of Bristol} \hfill 2018--2023
+
+\iflong
+  \begin{itemize}
+    \item During my undergraduate degree and PhD, I took the opportunity to be a teaching assistant across a number of units including:
+          \begin{center}
+            \begin{tabular}{p{0.3\textwidth}p{0.5\textwidth}}
+              \begin{itemize}
+                \setlength\itemsep{0pt}
+                \item Functional Programming
+                \item Types \& Lambda Calculus
+              \end{itemize}
+
+               &
+              \begin{itemize}
+                \setlength\itemsep{0pt}
+                \item Programming Languages and Computation
+                \item Advanced Topics in Programming Languages
+              \end{itemize}
+            \end{tabular}
+          \end{center}
+
+          This role involved leading tutorial-like problem classes, helping the students with lab working, as well as marking homework sheets.
+
+    \item For the Functional Programming and Types \& Lambda Calculus units, I have previously taken on the additional responsibility as lead teaching assistant with associated administrative duties and the task of checking the exam solutions.
+  \end{itemize}
+\fi
+
+\vspace{10pt}
+
+\uline{{\large EDUCATION}\hfill}
+
+\vspace{5pt}
+
+\textbf{PhD Computer Science --- University of Bristol} \hfill 2019--\phantom{2023}
+
+\iflong
+  \vspace{-5pt}
+  \begin{itemize}
+    \setlength\itemsep{0pt}
+    \item Numerous contributions to the research group's seminar series.
+    \item Oregon Programming Languages Summer School (2021)
+    \item Midlands Graduate School in the Foundations of Computing Science (2021)
+  \end{itemize}
+\fi
+
+\textbf{BSc (Hons) Mathematics and Computer Science --- University of Bristol} \hfill 2016--2019
+
+\iflong
+  \vspace{-5pt}
+  \begin{itemize}
+    \item During my undergraduate degree, I found that fluency in mathematical thinking gave me the analytical skills necessary to shed new light on the practical challenges faced in computer science.
+          I averaged a first-class mark of 85\% across a range of modules including:
+
+          \begin{center}
+            \begin{tabular}{p{0.3\textwidth}p{30pt}p{0.3\textwidth}}
+              \begin{itemize}
+                \setlength\itemsep{0pt}
+                \item Language Engineering
+                \item Theory of Computation
+                \item Types \& Lambda Calculus
+                \item AI \& Logic Programming
+              \end{itemize}
+
+               &
+
+               &
+              \begin{itemize}
+                \setlength\itemsep{0pt}
+                \item Set Theory
+                \item Combinatorics
+                \item Dynamic Systems
+                \item Machine Learning
+              \end{itemize}
+            \end{tabular}
+          \end{center}
+
+    \item Research experience:
+          \begin{itemize}
+            \setlength\itemsep{0pt}
+            \item \emph{The Dynamics of Dialects}. For my undergraduate dissertation, I used a model of natural language acquisition to investigate, through a series of simulations, how the structure of social networks influence the propagation of cultural symbols. It received a first-class mark of 87\%.
+            \item \emph{Applied Optimisation Research Internship}. In my second year as an undergraduate student, I was a research intern in the maths department. This project considered the problem of designing an optimal layout for a car park. It involved a mixture of calculus, geometry, and numerical simulation performed in MATLAB.
+          \end{itemize}
+
+    \item Awards:
+          \begin{itemize}
+            \setlength\itemsep{0pt}
+            \item Top Mathematics and Computer Science Graduate 2019
+            \item Top 10 Second Year Student in Computer Science, awarded by Netcraft
+            \item Top 5 First Year Student in Computer Science, awarded by Bank of America Merrill Lynch
+          \end{itemize}
+  \end{itemize}
+\fi
+
+\textbf{A-Levels --- Peter Symonds College} \hfill 2014--2016
+
+\iflong
+  \vspace{-5pt}
+  \begin{itemize}
+    \setlength\itemsep{0pt}
+    \item Mathematics A*
+    \item Further Mathematics A
+    \item Physics A
+    \item (AS) Economics A
+  \end{itemize}
+\fi
+
+% \textbf{GSCEs --- Swanmore College of Technology} \hfill 2009--2014
+% \iflong
+% \vspace{-5pt}
+% \begin{itemize}
+%   \item 13 GCSE including Mathematics, Science, English, and French.
+% \end{itemize}
+% \fi
+
+\vspace{10pt}
+
+\uline{{\large LANGUAGES \& TOOLS}\hfill}
+
+\vspace{5pt}
+
+\begin{tabular}{p{0.4\textwidth}p{0.2\textwidth}p{0.2\textwidth}}
+  \textbf{Advanced:}
+  \begin{itemize}
+    \setlength\itemsep{0pt}
+    \item Haskell
+    \item Functional Programming
+    \item Mathematics
+  \end{itemize}
+
+   &
+  \textbf{Experience With:}
+  \begin{itemize}
+    \setlength\itemsep{0pt}
+    \item C
+    \item Rust
+    \item Python
+  \end{itemize}
+
+   &
+  \begin{itemize}
+    \setlength\itemsep{0pt}
+    \item Linux
+    \item Git
+    \item \LaTeX{}
+  \end{itemize}
+\end{tabular}
+
+% \vspace{10pt}
+
+% \uline{{\large HOBBIES \& INTERESTS}\hfill}
+% \vspace{10pt}
+
+% \begin{adjustwidth}{10pt}{0pt}
+%   In addition to my passion for computer science, I thoroughly enjoyvarious physical activities.
+%   For many years, I practiced Taekwondo up-to a 2\textsuperscript{nd} Dan black belt, but my current obsessions are squash and bouldering.
+%   I also love reading and rarely have fewer than two books on the go.
+%   Some of my favourite genres include sci-fi, history and philosophy.
+% \end{adjustwidth}
+
+\end{document}
