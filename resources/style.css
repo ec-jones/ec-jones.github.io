@@ -53,6 +53,11 @@ nav a {
   display: block;
 }
 
+nav img {
+  width: 50px;
+  vertical-align: middle;
+}
+
 a,
 a:visited {
   color: var(--black);
@@ -68,17 +73,28 @@ a:hover {
 /* Main Body */
 
 main {
-  font-size: 25px;
+  font-size: 30px;
 }
 
 del {
   text-decoration: line-through;
+  text-decoration-thickness: 5px;
   text-decoration-color: var(--red);
 }
 
 ins {
   font-style: italic;
+  text-decoration-thickness: 5px;
   color: var(--blue);
+}
+
+main li {
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
+}
+
+main .description {
+  text-indent: 1.5em;
 }
 
 /* Adjustment */
@@ -90,8 +106,20 @@ ins {
     margin: 30px 0;
   }
 
+  nav img {
+    width: 30px;
+  }
+
   main {
     font-size: 15px;
+  }
+
+  del {
+    text-decoration-thickness: 2px;
+  }
+  
+  ins {
+    text-decoration-thickness: 2px;
   }
 }
 
@@ -103,6 +131,10 @@ ins {
   header {
     font-size: 20px;
     margin: 20px 0;
+  }
+
+  nav img {
+    width: 20px;
   }
 
   header .description {

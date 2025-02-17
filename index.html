@@ -29,29 +29,42 @@
         </div>
 
         <nav class="contact">
-            <a href="/index.html" title="Home" class="fa fa-home"></a>
             <a href="mailto: eddie.jones@bristol.ac.uk" title="E-mail me" class="fa fa-envelope"></a>
+
+            <a href="https://orcid.org/0000-0003-1762-5405" title="ORCID">
+                <img src="resources/ORCID-iD.svg" alt=”ORCID-iD”/>
+            </a>
+
             <a href="https://github.com/ec-jones" title="GitHub" class="fa fa-github"></a>
         </nav>
     </header>
 
     <main>
-        I am lecturer in compilers and programming language at the University of Bristol with a broad interest in programming languages and verification.
+        I am lecturer in compilers and programming language at the University of Bristol in the <a href="https://plrg-bristol.github.io/">languages research group</a> with a broad interest in programming languages, functional programming, and formal verification.
         Despite the etymology, I really believe that abstraction can bring us closer to <del>elegant</del> <ins>practical</ins> solutions!
 
-        <!-- <h2>Publications</h2>
+        <h2>Publications</h2>
         <ul>
-            <li>Coffee</li>
-            <li>Tea</li>
-            <li>Milk</li>
-        </ul>
+            <li>POPL 23 — <a href="https://dl.acm.org/doi/10.1145/3571262">Higher-Order MSL Horn Constraints</a> </li>
 
-        <h2>News</h2>
-        <ul>
-            <li>Coffee</li>
-            <li>Tea</li>
-            <li>Milk</li>
-        </ul> -->
+            <div class="description">
+                In this paper, we extend a decidable fragment of a first-order Horn clauses based on automata to a higher-order setting. As an application of this work, we develop an approach to verified socket programming.
+            </div>
+
+            <li>PLDI 22 — <a href="https://doi.org/10.1145/3519939.3523731">CycleQ: an efficient basis for cyclic equational reasoning</a> </li>
+
+            <div class="description">
+                We develop a cyclic proof system for automatically reasoning about the equational properties of functional programs that manipulate algebraic datatypes.
+                The system employs a novel proof inference rule for mitigating equational and inductive reasoning in the context of cyclic proofs as well as an optimised proof search strategy.
+            </div>
+
+            <li>POPL 21 — <a href="https://dl.acm.org/doi/10.1145/3434336">Intensional datatype refinement: with application to scalable verification of pattern-match safety</a> </li>
+
+            <div class="description">
+                We propose a refinement type system aiming to <em>pattern-match safety</em> of a functional program; that is, the absence of patterning matching errors at runtime.
+                Using a novel restriction on the form of refinements, we develop a sound and complete inference algorithm with a runtime complexity that is, in the worst-case, is linear in the size of the program. 
+            </div>
+        </ul>
     </main>
 </body>
 
